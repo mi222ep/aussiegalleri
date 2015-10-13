@@ -1,26 +1,34 @@
 <?php
 namespace model;
 class DogDAL{
-    private $dogID;
-    private $name;
-    private $regnr;
-    private $sex;
-    private $color;
-    private $sire;
-    private $dam;
-    private $dayOfBirth;
+    private $db;
+
+    //Static database column names
+    private static $name = "name";
+    private static $regnr = "regnr";
 
     public function __construct(\mysqli $db){
-        $this->dogID = 1;
-        $this->name ="Kalle";
-        $this->regnr="1235";
-        $this->sex="male";
-        $this->color="blue";
-        $this->sire="Johan";
-        $this->dam="Lisa";
-        $this->dayOfBirth="2015-02-03";
+        $this->db = $db;
 }
-    public function _test(){
-        echo $this->dogID, $this->name, $this->regnr, $this->sex, $this->color, $this->sire, $this->dam, $this->dayOfBirth;
+    private function getSingleValueFromDB($neededValue, $dogID){
+        $temp ="";
+        $stmt = $this->db->prepare("select ".$neededValue." from dog where dogID ='$dogID'");
+        if ($stmt === FALSE) {
+            throw new \Exception($this->db->error);
+        }
+        $stmt->execute();
+        $stmt->bind_result($password);
+        while ($stmt->fetch()) {
+            $temp = $password;
+        }
+        return $temp;
+    }
+    public function getDogNameFromDB(){
+        $name = $this->getSingleValueFromDB(self::$name, 2);
+        return $name;
+    }
+    public function getRegnrFromDB(){
+        $name = $this->getSingleValueFromDB(self::$regnr, 2);
+        return $name;
     }
 }
