@@ -10,7 +10,7 @@ class DogDAL{
     private $dam;
     private $dayOfBirth;
 
-    public function __construct(){
+    public function __construct(\mysqli $db){
         $this->dogID = 1;
         $this->name ="Kalle";
         $this->regnr="1235";

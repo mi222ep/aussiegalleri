@@ -1,5 +1,6 @@
 <?php
-include_once("Model/DogDAL.php");
+require_once("Controller/MasterController.php");
 echo "hello world!";
-$testDog = new \model\DogDAL();
-$testDog->_test();
+
+$mc = new \controller\MasterController();
+$mc->doTests();
